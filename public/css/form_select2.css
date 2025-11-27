@@ -1,0 +1,97 @@
+/* form_select2.css */
+
+/* Memperbaiki tampilan Select2 agar menyesuaikan dengan lebar form */
+.select2-container {
+    width: 100% !important; /* Pastikan Select2 menyesuaikan dengan lebar form */
+}
+
+/* Memperbaiki form dan input untuk Select2 */
+.form-control {
+    border-radius: 4px;
+    height: 40px; /* Ukuran input yang lebih konsisten */
+    margin-bottom: 10px; /* Memberikan jarak antar form input */
+}
+
+/* Styling untuk Select2 dropdown */
+.select2-container--default .select2-selection--single {
+    height: 40px;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+/* Styling untuk dropdown item Select2 */
+.select2-results__option {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+/* ===== */
+/* Form */
+/* ===== */
+
+/* Styling untuk Select2 di dalam form */
+.center-form .form-group select.form-control {
+    max-width: 800px; /* Lebar maksimal form */
+    margin: 0 auto; /* Memusatkan form */
+    padding: 15px; /* Memberikan padding di sekitar form */
+    overflow-y: auto; /* Menambahkan scroll vertikal jika diperlukan */
+    max-height: 80vh; /* Membatasi tinggi form */
+}
+
+/* Menambahkan margin di antara input field untuk memberikan jarak antar elemen */
+.form-group {
+    margin-bottom: 1rem; /* Menambahkan jarak antar form group */
+}
+
+/* Agar form tampil lebih responsif */
+.center-form {
+    max-width: 800px; /* Lebar maksimal form */
+    margin: 0 auto; /* Memusatkan form */
+    padding: 20px; /* Memberikan padding di sekitar form */
+    background-color: #fff; /* Memberikan latar belakang putih */
+    border: 1px solid #ccc; /* Memberikan border */
+    border-radius: 10px; /* Sudut border yang melengkung */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Memberikan bayangan */
+}
+
+/* Mengatur ukuran font dan elemen input */
+.form-control {
+    font-size: 14px; /* Ukuran font untuk input */
+    padding: 10px; /* Padding agar input tidak terlalu kecil */
+}
+
+/* Scroll vertikal jika form terlalu panjang */
+.center-form {
+    max-height: 80vh; /* Membatasi tinggi form */
+    overflow-y: auto; /* Menambahkan scroll vertikal */
+}
+
+/* Tombol kembali di sebelah kanan */
+#back-btn {
+    margin-left: 15px; /* Memberikan sedikit jarak antara tombol dan judul */
+}
+
+/* Menata header form dan tombol kembali */
+.form-header {
+    display: flex; /* Menggunakan flexbox untuk judul dan tombol */
+    justify-content: center; /* Mengatur judul dan tombol berada di kiri */
+    align-items: center; /* Memastikan keduanya sejajar secara vertikal */
+    margin-bottom: 5px; /* Memberikan jarak antara header dan form */
+}
+
+/* Membuat form lebih compact di layar kecil */
+@media (max-width: 768px) {
+    .form-group {
+        margin-bottom: 0.75rem; /* Mengurangi margin antar form group di layar kecil */
+    }
+    
+    .form-control {
+        font-size: 12px; /* Mengurangi ukuran font pada layar kecil */
+    }
+
+    .center-form {
+        max-width: 100%; /* Membuat form lebih lebar pada layar kecil */
+        padding: 0 10px; /* Memberikan sedikit padding di kanan-kiri */
+    }
+}
+

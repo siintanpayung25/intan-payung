@@ -1,0 +1,126 @@
+/* sidebar.css */
+
+/* Sidebar yang posisinya tetap (fixed) dan diturunkan tepat di bawah navbar */
+.sidebar {
+  position: fixed;
+  top: 56px; /* Sidebar dimulai tepat di bawah navbar */
+  left: 0;
+  width: 250px; /* Lebar sidebar */
+  background-color: #f8f9fa;
+  height: calc(100vh - 56px); /* Menyesuaikan tinggi sidebar dengan tinggi layar */
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  z-index: 999; /* Sidebar berada di atas konten */
+  transition: width 0.3s ease-in-out; /* Efek transisi saat meminimalkan/memaksimalkan sidebar */
+}
+
+/* Sidebar yang diperkecil (minimal) */
+.sidebar.minimized {
+  width: 60px; /* Lebar sidebar ketika diminimalkan */
+  padding: 10px 0; /* Mengurangi padding ketika sidebar minimal */
+}
+
+/* Menghapus bullet points dari menu di sidebar */
+.sidebar ul {
+  list-style-type: none; /* Menghapus bullet */
+  padding-left: 0; /* Menghapus padding kiri default */
+}
+
+/* Menghapus bullet points pada elemen <li> */
+.sidebar li {
+  padding-left: 10px; /* Menambah sedikit padding kiri jika diperlukan */
+}
+
+/* Menyembunyikan submenu di sidebar */
+.sidebar .submenu {
+  display: none;
+}
+
+/* Sidebar Link Styling */
+.sidebar a {
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: #007bff;
+}
+
+/* Menampilkan submenu saat hover (normal mode) */
+.sidebar:not(.minimized) li:hover .submenu {
+  display: block;
+}
+
+/* Menyembunyikan nama menu saat sidebar diminimalkan */
+.sidebar.minimized a span {
+  display: none; /* Sembunyikan nama menu */
+}
+
+/* Menampilkan teks menu saat sidebar normal */
+.sidebar:not(.minimized) a span {
+  display: inline; /* Tampilkan nama menu */
+}
+
+/* Menyembunyikan submenu-item saat sidebar minim dan mengganti menjadi tooltip */
+.sidebar.minimized .submenu-item {
+  display: inline-block;
+}
+
+/* Menampilkan submenu sebagai tooltip saat sidebar minimal */
+.sidebar.minimized .submenu-item a {
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+/* Menyembunyikan nama menu dan tombol logout saat sidebar minim */
+.sidebar.minimized a span,
+.sidebar.minimized .btn-link span {
+  display: none; /* Menyembunyikan nama menu dan tulisan logout */
+}
+
+/* Menyelaraskan teks logout dengan ikon */
+.sidebar .btn-link span {
+    vertical-align: top; /* Menyelaraskan teks ke atas */
+    line-height: 1; /* Menyesuaikan tinggi baris untuk mengangkat teks */
+}
+
+/* Menyembunyikan tombol tambah saat sidebar tidak minim */
+.sidebar:not(.minimized) .submenu-toggle {
+  display: none;
+}
+
+/* Menampilkan submenu saat mouse berada di ikon menu (hover) */
+.sidebar.minimized li:hover .submenu {
+  display: inline-grid; /* Menampilkan submenu secara grid */
+  position: fixed; /* Membuat submenu tetap berada di atas halaman utama */
+  left: 40px; /* Menempatkan submenu di sebelah kanan sidebar */
+  z-index: 10000; /* Pastikan submenu berada di atas konten utama */
+  background-color: #f7f7d9; /* Kotak berwarna putih */
+  border: 1px solid #ddd; /* Menambahkan border pada submenu */
+  padding: 10px;
+  width: auto; /* Lebar submenu menyesuaikan konten */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan */
+  max-height: calc(100vh - 56px); /* Membatasi submenu agar tidak keluar dari viewport */
+  overflow-y: auto; /* Menambahkan scroll jika submenu terlalu panjang */
+  border-radius: 12px; /* Membuat latar belakang berbentuk oval */
+  
+  /* Menambahkan garis di atas submenu untuk menunjukkan menu */
+  border-top: 5px solid #d95c0e; /* Memberikan garis tipis berwarna yang mengarah ke menu */
+}
+
+/* Efek hover untuk submenu item */
+.sidebar.minimized .submenu-item a:hover {
+  background-color: #157030; /* Warna latar belakang biru saat hover */
+  color: white; /* Mengubah warna teks menjadi putih saat hover */
+  border-radius: 12px; /* Membuat latar belakang berbentuk oval */
+}
+
+/* Efek hover untuk submenu item pada sidebar maksimal (normal mode) */
+.sidebar:not(.minimized) .submenu-item a:hover {
+  background-color: #157030;  /* Warna latar belakang biru saat hover */
+  color: white; /* Mengubah warna teks menjadi putih saat hover */
+  border-radius: 12px; /* Membuat latar belakang berbentuk oval */
+}

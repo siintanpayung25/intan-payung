@@ -1,0 +1,28 @@
+/* halaman_utama.css */
+
+/* Mengatur Konten Utama: Menambahkan margin kiri untuk menghindari tertutup sidebar */
+.main-content {
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: margin-left 0.3s ease; /* Efek transisi saat sidebar toggle */
+    margin-top: 56px; /* Menurunkan konten utama untuk menghindari navbar */
+    position: relative; /* Menambahkan posisi relatif untuk submenu agar tetap di atas */
+    z-index: 1; /* Menyusun halaman utama di bawah submenu */
+}
+
+/* Menyesuaikan margin kiri berdasarkan lebar sidebar */
+.sidebar.minimized + .main-content {
+    margin-left: 60px; /* Jika sidebar minimal, margin kiri lebih kecil */
+}
+
+.sidebar:not(.minimized) + .main-content {
+    margin-left: 250px; /* Jika sidebar maksimal, margin kiri lebih besar */
+}
+
+/* Mengatur tampilan pada perangkat kecil */
+@media (max-width: 767px) {
+    .main-content {
+        margin-left: 0; /* Menghilangkan margin kiri pada perangkat kecil */
+        padding-top: 56px; /* Menurunkan konten utama untuk menghindari navbar */
+    }
+}

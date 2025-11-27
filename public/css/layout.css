@@ -1,0 +1,23 @@
+/* layout.css */
+
+/* Form Centering */
+.center-form {
+    max-width: 800px; /* Menentukan lebar maksimal form */
+    margin: 0 auto; /* Memastikan form terpusat di tengah */
+    padding: 20px; /* Memberikan padding untuk form */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mengatur form grup agar memiliki jarak antar elemen */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Memastikan konten utama tidak tertutup oleh sidebar pada layar kecil */
+@media (max-width: 767px) {
+    .col-md-10 {
+        margin-left: 0; /* Menghilangkan margin kiri pada layar kecil */
+    }
+}
