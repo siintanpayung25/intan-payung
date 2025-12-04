@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
-use App\Models\Pelatihan_skala;
+use App\Models\Pelatihan_Skala;
 use App\Models\Pelatihan_Bentuk;
 use App\Models\Pelatihan_Kategori;
 use App\Models\Pelatihan_Jenis;

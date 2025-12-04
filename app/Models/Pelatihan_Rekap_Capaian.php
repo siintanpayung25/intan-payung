@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pelatihan_Rekap_Capaian extends Model
 {
     // Nama tabel yang benar di database
-    protected $table = 'Pelatihan_Rekap_Capaian';
+    protected $table = 'pelatihan_rekap_capaian';
 
     // Mendefinisikan Primary Key yang digunakan
     protected $primaryKey = 'pelatihan_rekap_capaian_id';

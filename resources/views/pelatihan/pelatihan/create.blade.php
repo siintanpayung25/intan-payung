@@ -333,7 +333,7 @@
         // Fungsi untuk mengambil data TNA berdasarkan NIP
     function fetchTnaData(nip) {
         $.ajax({
-            url: '/pelatihan-tna/ambil-tna-berdasarkan-nip/' + nip, // Endpoint untuk ambil TNA berdasarkan Nip
+            url: '{{ url('pelatihan-tna/ambil-tna-berdasarkan-nip') }}/' + nip, // Endpoint untuk ambil TNA berdasarkan Nip
             type: 'GET',
             success: function(data) {
                 // Jika data TNA belum ada (kosong), baru kosongkan dropdown dan isi dengan data baru
