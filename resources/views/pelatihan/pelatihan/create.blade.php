@@ -1,233 +1,279 @@
 @extends('layouts.dasar')
 
-@section('title', 'MySDM-Tambah Pelatihan')
+@section('title', 'MySD-Tambah Pelatihan')
 
 @section('content')
-<!-- Header dengan judul form dan tombol kembali -->
-<div class="form-header">
-    <h2>Tambah Pelatihan</h2> <!-- Judul Form di sebelah kiri -->
-    <a id="back-btn" href="{{ route('pelatihan.index') }}" class="btn btn-outline-secondary">
-        <i class="fas fa-arrow-left me-1"></i> Kembali
-    </a> <!-- Tombol Kembali di sebelah kanan -->
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+
+            <div class="card shadow-sm">
+                <div class="card-header pb-0 p-0 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Tambah Data Pelatihan</h5>
+
+                    <a href="{{ route('pelatihan.index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Kembali
+                    </a>
+                </div>
+
+                <!-- Menampilkan pesan kesalahan di atas form -->
+                <!-- @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif -->
+
+                <div class="card-body p-3">
+
+                    <form action="{{ route('pelatihan.store') }}" method="POST">
+                        @csrf
+
+                        {{-- ROW 1 --}}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <!-- NIP Pegawai -->
+                                <label for="nip">Nama Pegawai</label>
+                                <select name="nip" class="form-control select2" id="nip">
+                                    @if ($NamalevelUser === 'Pegawai')
+                                    <!-- Jika level user Pegawai, otomatis nip dari user yang login -->
+                                    <option value="{{ $nip }}" selected>{{ Auth::user()->pegawai->nama }}</option>
+                                    @else
+                                    <option value="">Pilih Pegawai</option>
+                                    @foreach ($pegawais as $pegawai)
+                                    <option value="{{ $pegawai->nip }}" {{ old('nip')==$pegawai->nip ? 'selected' : ''
+                                        }}>
+                                        {{ $pegawai->nama }}
+                                    </option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                @error('nip')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <!-- Skala Pelatihan -->
+                                <label for="skala_id">Skala Pelatihan</label>
+                                <select name="skala_id" class="form-control select2" id="skala_id">
+                                    <option value="">Pilih Skala</option>
+                                    @foreach($skalas as $skala)
+                                    <option value="{{ $skala->skala_id }}" {{ old('skala_id')==$skala->skala_id ?
+                                        'selected' : '' }}>
+                                        {{ $skala->nama }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('skala_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- ROW 2 --}}
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <!-- Bentuk Pelatihan -->
+                                <label for="bentuk_id">Bentuk Pelatihan</label>
+                                <select name="bentuk_id" class="form-control select2" id="bentuk_id">
+                                    <option value="">Pilih Bentuk</option>
+                                    @foreach($bentuks as $bentuk)
+                                    <option value="{{ $bentuk->bentuk_id }}" {{ old('bentuk_id')==$bentuk->bentuk_id ?
+                                        'selected' : '' }}>
+                                        {{ $bentuk->nama }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('bentuk_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <!-- Kategori Pelatihan -->
+                                <label for="kategori_id">Kategori Pelatihan</label>
+                                <select name="kategori_id" class="form-control select2" id="kategori_id">
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach($kategoris as $kategori)
+                                    <option value="{{ $kategori->kategori_id }}" {{ old('kategori_id')==$kategori->
+                                        kategori_id ? 'selected' : ''
+                                        }}>
+                                        {{ $kategori->nama }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('kategori_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <!-- Jenis Pelatihan -->
+                                <label for="jenis_id">Jenis Pelatihan</label>
+                                <select name="jenis_id" class="form-control select2" id="jenis_id">
+                                    <option value="">Pilih Jenis</option>
+                                    @foreach($jeniss as $jenis)
+                                    <option value="{{ $jenis->jenis_id }}" {{ old('jenis_id')==$jenis->jenis_id ?
+                                        'selected' : '' }}>
+                                        {{ $jenis->nama }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('jenis_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- ROW 3 --}}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <!-- Training Need Analysis (TNA) -->
+                                <label for="tna_id">
+                                    Pilih TNA (<i style="color: green; font-style: italic;">kosongkan jika bukan dari
+                                        TNA</i>)
+                                </label>
+                                <select name="tna_id" class="form-control select2" id="tna_id">
+                                    <option value="">Pilih TNA</option>
+                                    @foreach($tnas as $tna)
+                                    <option value="{{ $tna->tna_id }}" {{ old('tna_id')==$tna->tna_id ? 'selected' : ''
+                                        }}>
+                                        {{ $tna->nama }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('tna_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <!-- Nama Pelatihan -->
+                                <label for="nama">Nama Pelatihan</label>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}">
+                                @error('nama')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- ROW 4 --}}
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <!-- Tanggal Mulai -->
+                                <label for="tgl_mulai">Tanggal Mulai</label>
+                                <input type="date" class="form-control" id="tgl_mulai" name="tgl_mulai"
+                                    value="{{ old('tgl_mulai') }}">
+                                @error('tgl_mulai')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <!-- Tanggal Selesai -->
+                                <label for="tgl_selesai">Tanggal Selesai</label>
+                                <input type="date" class="form-control" id="tgl_selesai" name="tgl_selesai"
+                                    value="{{ old('tgl_selesai') }}">
+                                @error('tgl_selesai')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <!-- Durasi -->
+                                <label for="durasi">Durasi</label>
+                                <input type="text" class="form-control" id="durasi" name="durasi"
+                                    value="{{ old('durasi') ?? '' }}" placeholder="Contoh: 01.00" maxlength="6">
+                                @error('durasi')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- ROW 5 --}}
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <!-- Instansi -->
+                                <label for="instansi_id">Instansi</label>
+                                <select name="instansi_id" class="form-control select2" id="instansi_id">
+                                    <option value="">Pilih Instansi</option>
+                                    @foreach($instansi_gabung_universitas as $instansi)
+                                    <option value="{{ $instansi->instansi_id }}" {{ old('instansi_id')==$instansi->
+                                        instansi_id ? 'selected' : ''
+                                        }}>
+                                        {{ $instansi->nama }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('instansi_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <!-- Jumlah peserta -->
+                                <label for="jumlah_peserta">Jumlah peserta</label>
+                                <input type="number" class="form-control" id="jumlah_peserta" name="jumlah_peserta"
+                                    value="{{ old('jumlah_peserta') }}">
+                                @error('jumlah_peserta')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <!-- Rangking -->
+                                <label for="rangking">Rangking</label>
+                                <input type="number" class="form-control" id="rangking" name="rangking"
+                                    value="{{ old('rangking') }}">
+                                @error('rangking')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- ROW 6 --}}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <!-- Link Bukti Dukung -->
+                                <label for="link_bukti_dukung">Link Bukti Dukung</label>
+                                <input type="text" class="form-control @error('link_bukti_dukung') is-invalid @enderror"
+                                    id="link_bukti_dukung" name="link_bukti_dukung"
+                                    value="{{ old('link_bukti_dukung') }}">
+                                @error('link_bukti_dukung')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <!-- Nomor Sertifikat -->
+                                <label for="nama">Nomor sertifikat</label>
+                                <input type="text" class="form-control" id="nomor_sertifikat" name="nomor_sertifikat"
+                                    value="{{ old('nomor_sertifikat') }}">
+                                @error('nomor_sertifikat')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-end">
+                            <a href="{{ route('pelatihan.index') }}" class="btn btn-secondary me-2">Batal</a>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save me-1"></i>
+                                Simpan</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
-
-<!-- Menampilkan pesan kesalahan di atas form -->
-<!-- @if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif -->
-
-<!-- Formulir Tambah Pelatihan, diberi kotak dan styling -->
-<form action="{{ route('pelatihan.store') }}" method="POST" class="center-form">
-    @csrf
-
-    <!-- NIP Pegawai -->
-    <div class="form-group">
-        <label for="nip">Nama Pegawai</label>
-        <select name="nip" class="form-control select2" id="nip">
-            @if ($NamalevelUser === 'Pegawai')
-            <!-- Jika level user Pegawai, otomatis nip dari user yang login -->
-            <option value="{{ $nip }}" selected>{{ Auth::user()->pegawai->nama }}</option>
-            @else
-            <option value="">Pilih Pegawai</option>
-            @foreach ($pegawais as $pegawai)
-            <option value="{{ $pegawai->nip }}" {{ old('nip')==$pegawai->nip ? 'selected' : '' }}>
-                {{ $pegawai->nama }}
-            </option>
-            @endforeach
-            @endif
-        </select>
-        @error('nip')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Skala Pelatihan -->
-    <div class="form-group">
-        <label for="skala_id">Skala Pelatihan</label>
-        <select name="skala_id" class="form-control select2" id="skala_id">
-            <option value="">Pilih Skala</option>
-            @foreach($skalas as $skala)
-            <option value="{{ $skala->skala_id }}" {{ old('skala_id')==$skala->skala_id ? 'selected' : '' }}>
-                {{ $skala->nama }}
-            </option>
-            @endforeach
-        </select>
-        @error('skala_id')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Bentuk Pelatihan -->
-    <div class="form-group">
-        <label for="bentuk_id">Bentuk Pelatihan</label>
-        <select name="bentuk_id" class="form-control select2" id="bentuk_id">
-            <option value="">Pilih Bentuk</option>
-            @foreach($bentuks as $bentuk)
-            <option value="{{ $bentuk->bentuk_id }}" {{ old('bentuk_id')==$bentuk->bentuk_id ? 'selected' : '' }}>
-                {{ $bentuk->nama }}
-            </option>
-            @endforeach
-        </select>
-        @error('bentuk_id')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Kategori Pelatihan -->
-    <div class="form-group">
-        <label for="kategori_id">Kategori Pelatihan</label>
-        <select name="kategori_id" class="form-control select2" id="kategori_id">
-            <option value="">Pilih Kategori</option>
-            @foreach($kategoris as $kategori)
-            <option value="{{ $kategori->kategori_id }}" {{ old('kategori_id')==$kategori->kategori_id ? 'selected' : ''
-                }}>
-                {{ $kategori->nama }}
-            </option>
-            @endforeach
-        </select>
-        @error('kategori_id')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Jenis Pelatihan -->
-    <div class="form-group">
-        <label for="jenis_id">Jenis Pelatihan</label>
-        <select name="jenis_id" class="form-control select2" id="jenis_id">
-            <option value="">Pilih Jenis</option>
-            @foreach($jeniss as $jenis)
-            <option value="{{ $jenis->jenis_id }}" {{ old('jenis_id')==$jenis->jenis_id ? 'selected' : '' }}>
-                {{ $jenis->nama }}
-            </option>
-            @endforeach
-        </select>
-        @error('jenis_id')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Training Need Analysis (TNA) -->
-    <div class="form-group">
-        <label for="tna_id">
-            Pilih TNA jika pelatihan dari TNA (<i style="color: green; font-style: italic;">kosongkan jika bukan dari
-                TNA</i>)
-        </label>
-        <select name="tna_id" class="form-control select2" id="tna_id">
-            <option value="">Pilih TNA</option>
-            @foreach($tnas as $tna)
-            <option value="{{ $tna->tna_id }}" {{ old('tna_id')==$tna->tna_id ? 'selected' : '' }}>
-                {{ $tna->nama }}
-            </option>
-            @endforeach
-        </select>
-        @error('tna_id')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Nama Pelatihan -->
-    <div class="form-group">
-        <label for="nama">Nama Pelatihan</label>
-        <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}">
-        @error('nama')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Tanggal Mulai -->
-    <div class="form-group">
-        <label for="tgl_mulai">Tanggal Mulai</label>
-        <input type="date" class="form-control" id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai') }}">
-        @error('tgl_mulai')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Tanggal Selesai -->
-    <div class="form-group">
-        <label for="tgl_selesai">Tanggal Selesai</label>
-        <input type="date" class="form-control" id="tgl_selesai" name="tgl_selesai" value="{{ old('tgl_selesai') }}">
-        @error('tgl_selesai')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Durasi -->
-    <div class="form-group">
-        <label for="durasi">Durasi</label>
-        <input type="text" class="form-control" id="durasi" name="durasi" value="{{ old('durasi') ?? '' }}"
-            placeholder="Contoh: 01.00" maxlength="6">
-        @error('durasi')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Instansi -->
-    <div class="form-group">
-        <label for="instansi_id">Instansi</label>
-        <select name="instansi_id" class="form-control select2" id="instansi_id">
-            <option value="">Pilih Instansi</option>
-            @foreach($instansi_gabung_universitas as $instansi)
-            <option value="{{ $instansi->instansi_id }}" {{ old('instansi_id')==$instansi->instansi_id ? 'selected' : ''
-                }}>
-                {{ $instansi->nama }}
-            </option>
-            @endforeach
-        </select>
-        @error('instansi_id')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Jumlah peserta -->
-    <div class="form-group">
-        <label for="jumlah_peserta">Jumlah peserta</label>
-        <input type="number" class="form-control" id="jumlah_peserta" name="jumlah_peserta"
-            value="{{ old('jumlah_peserta') }}">
-        @error('jumlah_peserta')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Rangking -->
-    <div class="form-group">
-        <label for="rangking">Rangking</label>
-        <input type="number" class="form-control" id="rangking" name="rangking" value="{{ old('rangking') }}">
-        @error('rangking')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Link Bukti Dukung -->
-    <div class="form-group">
-        <label for="link_bukti_dukung">Link Bukti Dukung</label>
-        <input type="text" class="form-control @error('link_bukti_dukung') is-invalid @enderror" id="link_bukti_dukung"
-            name="link_bukti_dukung" value="{{ old('link_bukti_dukung') }}">
-        @error('link_bukti_dukung')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <!-- Nomor Sertifikat -->
-    <div class="form-group">
-        <label for="nama">Nomor sertifikat</label>
-        <input type="text" class="form-control" id="nomor_sertifikat" name="nomor_sertifikat"
-            value="{{ old('nomor_sertifikat') }}">
-        @error('nomor_sertifikat')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="text-end">
-        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Simpan</button>
-    </div>
-</form>
 @endsection
 
 @push('scripts')
@@ -277,6 +323,7 @@
             if (bentuk_id) {
                 $.ajax({
                     url: '/get-kategoris-by-bentuk/' + bentuk_id, // Endpoint untuk ambil kategori berdasarkan bentuk_id
+                    // url: '{{ url('get-kategoris-by-bentuk') }}/' + bentuk_id,
                     type: 'GET',
                     success: function(data) {
                         // Kosongkan dropdown kategori
@@ -310,6 +357,7 @@
             if (kategori_id) {
                 $.ajax({
                     url: '/get-jenis-by-kategori/' + kategori_id, // Endpoint untuk ambil jenis berdasarkan kategori_id
+                    // url: '{{ url('gget-jenis-by-kategori') }}/' + kategori_id,
                     type: 'GET',
                     success: function(data) {
                         // Kosongkan dropdown jenis
